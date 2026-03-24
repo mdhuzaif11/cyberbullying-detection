@@ -1,16 +1,15 @@
 import streamlit as st
 import pickle
 
+st.set_page_config(page_title="Cyberbullying Detection", page_icon="💬")
+
 st.title("Cyberbullying Detection System")
+st.write("Detect whether a comment contains cyberbullying using Machine Learning models.")
 
-st.write("This system detects whether a comment contains cyberbullying using Machine Learning models.")
-
-# Load vectorizer
 vectorizer = pickle.load(open("tfidfvectorizer.pkl","rb"))
 
-# Model selection
 model_name = st.selectbox(
-    "Select Machine Learning Model",
+    "Select Model",
     (
         "Linear SVC",
         "Logistic Regression",
@@ -22,7 +21,6 @@ model_name = st.selectbox(
     )
 )
 
-# Load selected model
 if model_name == "Linear SVC":
     model = pickle.load(open("LinearSVC.pkl","rb"))
 
@@ -44,22 +42,16 @@ elif model_name == "Bagging":
 elif model_name == "SGD Classifier":
     model = pickle.load(open("SGDClassifier.pkl","rb"))
 
+text = st.text_area("Enter Comment")
 
-# User input
-text = st.text_area("Enter a Comment")
-
-# Prediction
 if st.button("Predict"):
-
     if text.strip() == "":
         st.warning("Please enter some text")
-
     else:
         transform = vectorizer.transform([text])
         prediction = model.predict(transform)
 
         if prediction[0] == 1:
             st.error("Cyberbullying Detected")
-
         else:
             st.success("No Cyberbullying Detected")
