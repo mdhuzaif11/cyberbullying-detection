@@ -1,5 +1,7 @@
 import streamlit as st
 import pickle
+model=pickle.load(open("LinearSVC.pkl","rb"))
+vectorizer = pickle.load(open("tfidfvectoizer.pkl","rb"))
 
 st.set_page_config(page_title="Cyberbullying Detection", page_icon="💬")
 
