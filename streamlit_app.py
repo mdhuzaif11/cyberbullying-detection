@@ -6,7 +6,7 @@ st.set_page_config(page_title="Cyberbullying Detection", page_icon="💬")
 st.title("Cyberbullying Detection System")
 st.write("Detect whether a comment contains cyberbullying using Machine Learning models.")
 
-vectorizer = pickle.load(open("tfidfvectorizer.pkl","rb"))
+vectorizer = pickle.load(open("tfidfvectoizer.pkl","rb"))
 
 model_name = st.selectbox(
     "Select Model",
