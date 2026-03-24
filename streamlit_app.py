@@ -1,19 +1,10 @@
 import streamlit as st
 import pickle
-import os
-
-st.set_page_config(page_title="Cyberbullying Detection", page_icon="💬")
 
 st.title("Cyberbullying Detection System")
-st.write("Detect whether a comment contains cyberbullying using Machine Learning models.")
-
-# Get current directory
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load vectorizer
-vectorizer_path = os.path.join(BASE_DIR, "tfidfvecotizer.pkl")
-with open(vectorizer_path, "rb") as f:
-    vectoizer = pickle.load(f)
+vectorizer = pickle.load(open("tfidfvecotizer.pkl","rb"))
 
 # Model selection
 model_name = st.selectbox(
@@ -29,42 +20,36 @@ model_name = st.selectbox(
     )
 )
 
-# Load model
+# Load selected model
 if model_name == "Linear SVC":
-    model_file = "LinearSVC.pkl"
+    model = pickle.load(open("LinearSVC.pkl","rb"))
 
 elif model_name == "Logistic Regression":
-    model_file = "LogisticRegression.pkl"
+    model = pickle.load(open("LogisticRegression.pkl","rb"))
 
 elif model_name == "Naive Bayes":
-    model_file = "MultinomialNB.pkl"
+    model = pickle.load(open("MultinomialNB.pkl","rb"))
 
 elif model_name == "Decision Tree":
-    model_file = "DecisionTreeClassifier.pkl"
+    model = pickle.load(open("DecisionTreeClassifier.pkl","rb"))
 
 elif model_name == "AdaBoost":
-    model_file = "AdaBoostClassifier.pkl"
+    model = pickle.load(open("AdaBoostClassifier.pkl","rb"))
 
 elif model_name == "Bagging":
-    model_file = "BaggingClassifier.pkl"
+    model = pickle.load(open("BaggingClassifier.pkl","rb"))
 
 elif model_name == "SGD Classifier":
-    model_file = "SGDClassifier.pkl"
+    model = pickle.load(open("SGDClassifier.pkl","rb"))
 
-model_path = os.path.join(BASE_DIR, model_file)
-
-with open(model_path, "rb") as f:
-    model = pickle.load(f)
-
-# User input
 text = st.text_area("Enter Comment")
 
 if st.button("Predict"):
     if text.strip() == "":
-        st.warning("Please enter some text")
+        st.warning("Please enter text")
     else:
-        transformed_text = vectoizer.transform([text])
-        prediction = model.predict(transformed_text)
+        data = vectorizer.transform([text])
+        prediction = model.predict(data)
 
         if prediction[0] == 1:
             st.error("Cyberbullying Detected")
