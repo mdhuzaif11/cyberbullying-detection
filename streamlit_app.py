@@ -12,8 +12,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load vectorizer
 vectorizer_path = os.path.join(BASE_DIR, "tfidfvecotizer.pkl")
-with open(vectorizer_path, "rb") as f:
-    vectorizer = pickle.load(f)
+with open(vectoizer_path, "rb") as f:
+    vectoizer = pickle.load(f)
 
 # Model selection
 model_name = st.selectbox(
