@@ -4,7 +4,7 @@ import pickle
 st.title("Cyberbullying Detection System")
 
 # Load vectorizer
-vectorizer = pickle.load(open("tfidfvecotizer.pkl","rb"))
+vectorizer = pickle.load(open("tfidfvectoizer.pkl","rb"))
 
 # Model selection
 model_name = st.selectbox(
